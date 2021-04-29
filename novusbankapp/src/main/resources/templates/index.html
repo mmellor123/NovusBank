@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="fragments/header :: common-header"/>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+<body>
+	<div th:replace="fragments/navbar :: common-navbar"/>
+	<div class="container">
+		<h2>Welcome to Novus Bank</h1>
+		<div>
+			<p><strong>Hello, </strong></p>
+			<p th:text="${user.getFirstName()} + ' ' + ${user.getLastName()} + '!'"/>
+			<p><strong>Account Number: </strong></p>
+			<p th:text = "${user.getAccountNumber()}"/>
+			<p><strong>Balance: </strong></p>
+			<p th:text = "'£' + ${user.getBalance()}"/>
+			<p><strong>Email: </strong></p>
+			<p th:text = "${user.getEmail()}"/>
+			
+		</div>
+	</div>
+</body>
+</html>
