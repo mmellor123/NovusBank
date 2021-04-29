@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>View Transactions</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+	<div th:replace="fragments/navbar :: common-navbar"/>
+	<div class="container">
+		<div>
+			<h2 th:text="'Balance: £' + ${user.getBalance()}"/>
+		</div>
+		
+		<form action="list_transactions" method="post">
+			<table style="with: 50%">
+	 
+				<tr>
+					<td>Send To (Account Number)</td>
+					<td><input type="text" name="receiverAccountNumber" /></td>
+				</tr>
+					<tr>
+					<td>Amount</td>
+					<td><input type="text" name="amount" /></td>
+				</tr>
+			</table>
+			<input type="submit" value="Send" />
+		</form>
+		
+		<h2>Your Transactions</h2>
+		<div>
+			<table style="width:50%">
+			  <tr>
+			    <th>Date</th>
+			    <th>Sent</th>
+			    <th>Amount</th>
+			    <th>Balance</th>
+			  </tr>
+			  
+			  <tr th:each="transaction: ${transactions}">
+				<td th:text="${transaction.getDate()}" />
+				<div th:switch="${transaction.getSender().getAccountNumber()}">
+			    	<td th:case="${user.getAccountNumber()}" th:text="'TO ' + ${transaction.getReceiver().getFirstName()}"/>
+			    	<td th:case="*" th:text="'FROM ' + ${transaction.getSender().getFirstName()}"/>
+			    </div>
+			    <td th:text="'£' + ${transaction.getAmount()}" />
+			    <div th:switch="${transaction.getSender().getAccountNumber()}">
+			    	<td th:case="${user.getAccountNumber()}" th:text="'£' + ${transaction.getSenderBalance()}"/>
+			    	<td th:case="*" th:text="${'£' + transaction.getReceiverBalance}"/>
+			    </div>
+			  </tr>
+		
+			</table>
+		</div>
+	</div>
+</body>
+</html>
